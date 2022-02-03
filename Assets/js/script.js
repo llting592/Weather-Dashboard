@@ -59,7 +59,7 @@ var getFiveDayForecast = function(city){
     fetch(apiURL)
     .then(function(response){
         response.json().then(function(data){
-            displayFiveDay(data);
+            displayFiveDay(data, city);
         });
     });
 };
@@ -70,7 +70,8 @@ var displayFiveDay = function(weather){
     weatherForecast = "Five Day Forecast:";
 
     var forecast = weather.list;
-    for (var i=5; i < forecast.length; i=i+8){
+        for(var i=5; i < forecast.length; i++){
+            
         var dayForecast = forecast[i];
 
         var forecastEl = document.createElement("div");
@@ -107,7 +108,7 @@ var pastSearch = function(pastSearch){
     pastSearchEl.classList = "d-flex w-80 btn-light border p-3";
     pastSearchEl.setAttribute("city-data", pastSearch);
     pastSearchEl.setAttribute("type", "submit");
-    pastSearchEl.prepend(pastSearchEl);
+    pastSearchBtn.prepend(pastSearchEl);
 }
 
 var pastSearchHandler = function(event){
