@@ -27,7 +27,7 @@ var displayWeather = function (weather, userInput){
     currentWeather.textContent="";
 
     var currentDate = document.createElement("span");
-    currentDate.textContent="(" + SVGAnimateMotionElement(weather.dt.value).format("D MMM, YYYY");
+    currentDate.textContent= " (" + moment(weather.dt.value).format("D MMM, YYYY") + ") ";
     searchedCityInput.appendChild(currentDate);
 
     var weatherIcon = document.createElement("img");
@@ -101,7 +101,7 @@ var displayFiveDay = function(weather){
 
 };
 
-var pastSearchOutput = function(pastSearch){
+var pastSearch = function(pastSearch){
     var pastSearchEl = document.createElement("button");
     pastSearchEl.textContent = pastSearch;
     pastSearchEl.classList = "d-flex w-80 btn-light border p-3";
