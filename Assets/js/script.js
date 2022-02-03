@@ -9,7 +9,7 @@ var pastSearchBtn = document.querySelector("#past-search-btn");
 var apiKey = "818583db1cb8276b10072d87158aa95a"
 var cities = [];
 
-
+//fetch current city weather data from API
 var getCityWeather = function(city){
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
     fetch(apiURL)
@@ -19,6 +19,8 @@ var getCityWeather = function(city){
         });
     });
 };
+
+//display data (temp, wind, humidity) pulled
 var displayWeather = function(weather, searchCity){
    weatherContainer.textContent= "";  
    citySearchInput.textContent=searchCity;
@@ -52,6 +54,8 @@ var displayWeather = function(weather, searchCity){
    var lat = weather.coord.lat;
    var lon = weather.coord.lon;
 }
+
+//fetch five day forecast from API
 var getFiveDayForecast = function(city){
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
 
@@ -63,7 +67,7 @@ var getFiveDayForecast = function(city){
         });
     });
 };
-//get five day forecast
+//display five day forecast data pulled
 var displayFiveDayForecast = function(weather){
 
     forecastContainer.textContent = ""
@@ -74,7 +78,7 @@ var displayFiveDayForecast = function(weather){
        var dailyForecast = forecast[i];
 
        var forecastEl=document.createElement("div");
-       forecastEl.classList = "card bg-primary text-light m-2";
+       forecastEl.classList = "card bg-primary text-light m-3";
 
        var forecastDate = document.createElement("h3")
        forecastDate.textContent= moment.unix(dailyForecast.dt).format("MMM D, YYYY");
@@ -104,10 +108,11 @@ var displayFiveDayForecast = function(weather){
        forecastContainer.appendChild(forecastEl);
     }
 }
+// to be able to have working buttons and click past cities
 var pastSearch = function(pastSearch){
     var pastSearchEl = document.createElement("button");
     pastSearchEl.textContent = pastSearch;
-    pastSearchEl.classList = "d-flex w-100 btn-light border p-2";
+    pastSearchEl.classList = "d-flex w-80 btn-light border p-2";
     pastSearchEl.setAttribute("data-city",pastSearch)
     pastSearchEl.setAttribute("type", "submit");
     pastSearchBtn.prepend(pastSearchEl);
