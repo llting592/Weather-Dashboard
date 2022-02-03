@@ -1,7 +1,7 @@
 //set global variables 
 var cityFormInput=document.querySelector("#city-search");
 var cityInput=document.querySelector("#city");
-var weatherContainerEl=document.querySelector("#current-weather-container");
+var weatherContainer=document.querySelector("#current-weather-container");
 var citySearchInput = document.querySelector("#searched-city");
 var forecastTitle = document.querySelector("#forecast");
 var forecastContainer = document.querySelector("#fiveday-forecast-container");
@@ -20,7 +20,7 @@ var getCityWeather = function(city){
     });
 };
 var displayWeather = function(weather, searchCity){
-   weatherContainerEl.textContent= "";  
+   weatherContainer.textContent= "";  
    citySearchInput.textContent=searchCity;
    var currentDate = document.createElement("span")
    currentDate.textContent=" (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
@@ -44,11 +44,11 @@ var displayWeather = function(weather, searchCity){
    humidity.classList = "list-group-item"
    
   
-   weatherContainerEl.appendChild(temp);
+   weatherContainer.appendChild(temp);
    
-   weatherContainerEl.appendChild(humidity);
+   weatherContainer.appendChild(humidity);
    
-   weatherContainerEl.appendChild(windSpeed);
+   weatherContainer.appendChild(windSpeed);
    var lat = weather.coord.lat;
    var lon = weather.coord.lon;
 }
@@ -59,12 +59,12 @@ var getFiveDayForecast = function(city){
 
     .then(function(response){
         response.json().then(function(data){
-           displayFiveDay(data);
+           displayFiveDayForecast(data);
         });
     });
 };
 //get five day forecast
-var displayFiveDay = function(weather){
+var displayFiveDayForecast = function(weather){
 
     forecastContainer.textContent = ""
 
@@ -117,7 +117,7 @@ var pastSearchHandler = function(event){
     var city = event.target.getAttribute("data-city")
     if(city){
         getCityWeather(city);
-        get5Day(city);
+        getFiveDayForecast(city);
     }
 }
 
@@ -126,7 +126,7 @@ var formSumbitHandler = function(event){
     var city = cityInput.value.trim();
     if(city){
         getCityWeather(city);
-        get5Day(city);
+        getFiveDayForecast(city);
         cities.unshift({city});
         cityInput.value = "";
     } else{
