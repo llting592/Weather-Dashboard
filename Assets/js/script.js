@@ -55,6 +55,10 @@ var displayWeather = function(weather, searchCity){
    var lon = weather.coord.lon;
 }
 
+//note- planned to add UV index function here and add the favorable, moderate and severe classes to change colors, but currently could not get the information from the API to fetch properly
+
+
+
 //fetch five day forecast from API
 var getFiveDayForecast = function(city){
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
