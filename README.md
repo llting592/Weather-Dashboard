@@ -30,7 +30,7 @@ THEN I am again presented with current and future conditions for that city
 ```
 
 ## Screenshot of Mockup
-![]
+![Screenshot](https://github.com/llting592/Weather-Dashboard/blob/main/Assets/images/Weather-Dashboard-screenshot.png)
 
 ## Link to Deployed Webpage
 [Link to Deployed Webpage](https://llting592.github.io/Weather-Dashboard/)
