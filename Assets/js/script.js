@@ -1,7 +1,7 @@
 var cityInputForm = document.querySelector("#city-search");
 var cityInput= document.querySelector("#city");
 var searchedCityInput = document.querySelector("#searched-city");
-var weatherForecast = document.querySelector("#weather-forecast");
+var weatherForecast = document.querySelector("#forecast");
 var forecastContainer = document.querySelector("#fiveday-forecast-container");
 var pastSearchBtn = document.querySelector("#past-search-btn");
 var currentWeather = document.querySelector("#current-weather-container");
@@ -65,42 +65,55 @@ var getFiveDayForecast = function(city){
 };
 
 //display five day forecast
-var displayFiveDay = function(weather){
-    forecastContainer.textContent="";
-    weatherForecast = "Five Day Forecast:";
-
-    var forecast = weather.list;
-        for(var i=5; i < forecast.length; i++){
-            
-        var dayForecast = forecast[i];
-
-        var forecastEl = document.createElement("div");
-        forecastEl.classList = "card bg-primary text-light m-3";
-
-        var forecastDate = document.createElement("h3")
-        forecastDate.textContent = moment.unix(dayForecast.dt).format("D MMM, YYYY");
-
-        var weatherIcon = document.createElement("img")
-       weatherIcon.classList = "card-body text-center";
-       weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`);
-       forecastEl.appendChild(weatherIcon);
-
-       var forecastTemp = document.createElement("span");
-       forecastTemp.textContent = "Temp: " + dayForecast.main.temp + " F";
-       forecastTemp.classList = "card-body text-center";
-
-       var forecastWind = document.createElement("span");
-       forecastWind.textContent = "Wind: " + dayForecast.wind.speed + " MPH";
-       forecastWind.classList = "card-body text-center";
-
-       var forecastHumidity = document.createElement("span");
-       forecastHumidity.textContent = "Humidity: " + dayForecast.main.humidity + " %";
-       forecastHumidity.classList = "card-body text-center";
-
-       forecastContainer.appendChild(forecastEl);
-    }
-
+var get5Day = function(city){
+    var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
+    fetch(apiURL)
+    .then(function(response){
+        response.json().then(function(data){
+           display5Day(data);
+        });
+    });
 };
+
+var display5Day = function(weather){
+    forecastContainer.textContent = ""
+    weatherForecast.textContent = "5-Day Forecast:";
+    var forecast = weather.list;
+        for(var i=5; i < forecast.length; i=i+8){
+
+       var dailyForecast = forecast[i];
+
+       var forecastEl=document.createElement("div");
+       forecastEl.classList = "card bg-primary text-light m-2";
+
+       var forecastDate = document.createElement("h5")
+       forecastDate.textContent= moment.unix(dailyForecast.dt).format("D MMM, YYYY");
+       forecastDate.classList = "card-header text-center"
+       forecastEl.appendChild(forecastDate);
+       
+       var weatherIcon = document.createElement("img")
+       weatherIcon.classList = "card-body text-center";
+       weatherIcon.setAttribute("src", `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`);  
+       forecastEl.appendChild(weatherIcon);
+       
+       var forecastTempEl=document.createElement("span");
+       forecastTempEl.classList = "card-body text-center";
+       forecastTempEl.textContent = "Temp: " + dailyForecast.main.temp + " °F";
+       forecastEl.appendChild(forecastTempEl);
+       
+       var forecastWindEl=document.createElement("span");
+       forecastWindEl.classList = "card-body text-center";
+       forecastWindEl.textContent = "Wind: " + dailyForecast.wind.speed + " MPH";
+       forecastEl.appendChild(forecastWindEl);
+       
+       var forecastHumEl=document.createElement("span");
+       forecastHumEl.classList = "card-body text-center";
+       forecastHumEl.textContent = "Humidity: " + dailyForecast.main.humidity + "  %";
+       forecastEl.appendChild(forecastHumEl);
+
+        forecastContainer.appendChild(forecastEl);
+    }
+}
 
 var pastSearch = function(pastSearch){
     var pastSearchEl = document.createElement("button");
