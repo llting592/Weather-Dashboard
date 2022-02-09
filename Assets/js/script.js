@@ -53,9 +53,32 @@ var displayWeather = function(weather, searchCity){
    weatherContainer.appendChild(windSpeed);
    var lat = weather.coord.lat;
    var lon = weather.coord.lon;
+
+   getUVI(lat, lon);
 }
 
 //note- planned to add UV index function here and add the favorable, moderate and severe classes to change colors, but currently could not get the information from the API to fetch properly
+
+function getUVI(lat, lon) {
+    var uviURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=${apiKey}`
+    fetch(uviURL)
+        .then(function(response){
+            response.json().then(function(data){
+                console.log(data);
+                var uviIndex = document.createElement("div");
+                
+                uviIndex.textContent = "UV Index: " + data.current.uvi;
+                
+                if (data.current.uvi < 2 ){
+                    uviIndex.classList.add("favorable"); 
+                    console.log("hello");
+
+                }
+                weatherContainer.appendChild(uviIndex);
+                
+            });
+        });
+}
 
 
 

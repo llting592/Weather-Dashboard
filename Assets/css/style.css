@@ -17,8 +17,6 @@ span.moderate{
     padding: 3px;
     background-color: yellow;
 }
-span.favorable{
-    padding: 3px;
-    background-color: green;
-    color:white;
+.favorable{
+    background-color: green !important;
 }
